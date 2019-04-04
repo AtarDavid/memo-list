@@ -8,7 +8,7 @@ export class MemoList extends Component {
         super(props)
         this.state = {
             text: '',
-            items: []
+            items: JSON.parse(localStorage.getItem('memos')) || []
         }
     }
 
@@ -23,12 +23,14 @@ export class MemoList extends Component {
             id: Date.now(),
             text: this.state.text
         }
+        const newList = this.state.items.concat(newItem)
         this.setState(
             state => ({
-                items: state.items.concat(newItem),
+                items: newList,
                 text: ''
             })
         )
+        localStorage.setItem('memos', JSON.stringify(newList))
     }
 
     render() {
